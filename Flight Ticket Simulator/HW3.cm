@@ -1,0 +1,163 @@
+int numOfSeats = 187;
+int legRoom = 18;
+int firstClass = 16;
+int mainCabin = 153;
+
+int agent1SoldLegRoom = 0;
+int agent1SoldFirstClass = 0;
+int agent1SoldMainCabin = 0;
+
+int agent2SoldLegRoom = 0;
+int agent2SoldFirstClass = 0;
+int agent2SoldMainCabin = 0;
+
+int agent3SoldLegRoom = 0;
+int agent3SoldFirstClass = 0;
+int agent3SoldMainCabin = 0;
+
+semaphore s;
+
+
+void getChoice(int& val)
+{
+	val = random(4); 
+if(val==0)
+	val=val+1;
+}
+
+void agent(int& agentNumber, int& numOfSeats) 
+{
+
+
+
+
+int cstmrChoice = 0;
+while(numOfSeats > 0)
+{
+wait(s);
+getChoice(cstmrChoice);
+
+cout << "Agent " << agentNumber << " sold: " << endl;
+
+	if((cstmrChoice == 1) && (mainCabin != 0))
+	{
+		mainCabin = mainCabin-1;
+		
+		numOfSeats = numOfSeats - 1;
+
+		if(agentNumber == 1)
+		{
+			agent1SoldMainCabin = agent1SoldMainCabin + 1;
+			cout << "Main Cabin: " << agent1SoldMainCabin << endl;
+			cout << "First Class: " << agent1SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent1SoldLegRoom << endl;
+			cout << endl;
+		
+		}
+		else if(agentNumber == 2)
+		{
+			agent2SoldMainCabin = agent2SoldMainCabin + 1;
+			cout << "Main Cabin: " << agent2SoldMainCabin << endl;
+			cout << "First Class: " << agent2SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent2SoldLegRoom << endl;
+			cout << endl;
+		}
+		else if(agentNumber ==3)
+			agent3SoldMainCabin = agent3SoldMainCabin + 1;
+			cout << "Main Cabin: " << agent3SoldMainCabin << endl;
+			cout << "First Class: " << agent3SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent3SoldLegRoom << endl;
+			cout << endl;
+	}
+	else if((cstmrChoice == 2) && (firstClass != 0))
+	{
+		firstClass = firstClass -1;
+		
+		numOfSeats = numOfSeats - 1;
+
+		if(agentNumber == 1)
+		{
+			agent1SoldFirstClass= agent1SoldFirstClass + 1;
+			cout << "Main Cabin: " << agent1SoldMainCabin << endl;
+			cout << "First Class: " << agent1SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent1SoldLegRoom << endl;
+			cout << endl;
+		}
+		else if(agentNumber == 2)
+		{
+			agent2SoldFirstClass= agent2SoldFirstClass + 1;
+			cout << "Main Cabin: " << agent2SoldMainCabin << endl;
+			cout << "First Class: " << agent2SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent2SoldLegRoom << endl;
+			cout << endl;
+		}
+		else if(agentNumber ==3)
+			agent3SoldFirstClass= agent3SoldFirstClass + 1;
+			cout << "Main Cabin: " << agent3SoldMainCabin << endl;
+			cout << "First Class: " << agent3SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent3SoldLegRoom << endl;
+			cout << endl;
+	}
+	else if((cstmrChoice == 3) && (legRoom != 0))
+	{
+		legRoom = legRoom - 1;
+		
+		numOfSeats = numOfSeats - 1;
+
+		if(agentNumber == 1)
+		{
+			agent1SoldLegRoom= agent1SoldLegRoom + 1;
+			cout << "Main Cabin: " << agent1SoldMainCabin << endl;
+			cout << "First Class: " << agent1SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent1SoldLegRoom << endl;
+			cout << endl;
+		}
+		else if(agentNumber == 2)
+		{
+			agent2SoldLegRoom= agent2SoldLegRoom + 1;
+			cout << "Main Cabin: " << agent2SoldMainCabin << endl;
+			cout << "First Class: " << agent2SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent2SoldLegRoom << endl;
+			cout << endl;
+		}
+		else if(agentNumber ==3)
+			agent3SoldLegRoom= agent3SoldLegRoom + 1;
+			cout << "Main Cabin: " << agent3SoldMainCabin << endl;
+			cout << "First Class: " << agent3SoldFirstClass<< endl;
+			cout << "Leg Room: " << agent3SoldLegRoom << endl;
+			cout << endl;
+	}
+	else
+		cout << "Sorry no more seats available for this class" << endl << endl;
+
+
+
+
+signal(s);
+}
+}
+	
+
+void main()
+{
+//must decrement through mutual exclusion
+
+
+
+int agent1 = 1;
+int agent2 = 2;
+int agent3 = 3;
+
+initialsem(s, 1);
+if(numOfSeats > 0)
+{
+	cobegin 
+	{
+			agent(agent1, numOfSeats);
+			agent(agent2, numOfSeats);
+			agent(agent3, numOfSeats);
+	}
+}
+
+
+}
